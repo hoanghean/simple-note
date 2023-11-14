@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['delete'])) {
         $note_file = "notes/{$note_name}.txt";
     } else {
         // Ngược lại, tạo một tên ngẫu nhiên mới
-        $random_name = bin2hex(random_bytes(5));
+        $random_name = substr(bin2hex(random_bytes(3)), 0, 5);
         $note_file = "notes/{$random_name}.txt";
     }
 
