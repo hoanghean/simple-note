@@ -15,14 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['delete'])) {
     $note_title = trim($_POST['note_title']);
     $note_content = $_POST['note_content'];
 
-    if ($note_name && in_array("notes/{$note_name}.txt", $notes)) {
-        // Nếu 'note' đã tồn tại trong danh sách, sử dụng tên 'note' đó
-        $note_file = "notes/{$note_name}.txt";
-    } else {
-        // Ngược lại, tạo một tên ngẫu nhiên mới
+    // Kiểm tra xem tên file đã tồn tại trong danh sách hay chưa
+    $random_name = substr(bin2hex(random_bytes(3)), 0, 5);
+    while (in_array("notes/{$random_name}.txt", $notes)) {
         $random_name = substr(bin2hex(random_bytes(3)), 0, 5);
-        $note_file = "notes/{$random_name}.txt";
     }
+
+    $note_file = "notes/{$random_name}.txt";
 
     $note_data = "$note_title || $note_content";
     file_put_contents($note_file, $note_data);
